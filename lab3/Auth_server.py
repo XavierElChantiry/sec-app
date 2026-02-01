@@ -1,8 +1,15 @@
 
 # i will be cleaning this up into functions if i need to build on this next week
 import socket
-import crypt
+# import crypt
 # I have improted socket
+
+#this will be moved to a external file if we have to topuch this section again
+auth_dict = {
+  "mike": b'\x1a\xa4\xf3\xd6\xea[L\x93\x05\xa7\xef\xe7\xd0k1\xe9v1w\x11\x9a\xfb\x06\x04\xa27\xdd\x7f\xa3n}\x82', # Ford
+  "mini": b'\xca\x97\x81\x12\xca\x1b\xbd\xca\xfa\xc21\xb3\x9a#\xdcM\xa7\x86\xef\xf8\x14|Nr\xb9\x80w\x85\xaf\xeeH\xbb', # a
+  "xav": b'y\x02i\x9b\xe4,\x8a\x8eF\xfb\xbbE\x01re\x17\xe8k"\xc5j\x18\x9fv%\xa6\xdaI\x08\x1b$Q'
+}
 
 port = 12345
 s = socket.socket()
@@ -50,7 +57,23 @@ def chat_function():
             c.close()
             break
 
-
+def authentication(counter):
+    try:
+        while counter > 0 :
+            pw = c.recv(1042)
+            if pw == auth_dict[username]:
+                c.send(("welcome " + username).encode())
+                print("user authenticated")
+                return True
+            else:
+                print("user not authenticated")
+                c.send(("Username or password is incorrect. try again").encode())
+                counter -= 1
+        return False
+    except Exception as error:
+        print(error)
+        print("username does not exist")
+        return False
 
 
 s.bind(('', port))
@@ -59,18 +82,29 @@ s.listen(5)
 print ("socket is listening")
 
 while True: 
+
     c, addr = s.accept()
     print ('Got connection from', addr )
 
-
     #take in username
+
     inital_response = c.recv(1042).decode()
     if inital_response.startswith("HELLO|"):
         username = inital_response[6:]
-        c.send(("hello " + username + " we are now connected").encode())
+        c.send(("hello " + username + " password please").encode())
         print("connected to " + username)
+
+        counter = 7
+
+
         # start taking messages from client
-        chat_function()
+        if authentication(counter):
+            chat_function()
+        else:
+            print("triggeted")
+            c.send("ERROR|all guesses expended".encode())
+        c.close()
+
  # if client does not say hello they get disconnected
     else:
         print("client did not say hello, and therefore was rejected")

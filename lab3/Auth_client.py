@@ -1,4 +1,6 @@
 import socket
+import hashlib
+import pyotp
 
 s = socket.socket()
 
@@ -12,7 +14,22 @@ print('type something contaning the word "exit" to break conection')
 # HELLO| needed to decalre username
 s.send(("HELLO|" + x).encode())
 print (s.recv(1024).decode())
-while True:
+
+authenticated = False
+
+while not authenticated:
+    try:
+        pw = input("password: ")
+        s.send(hashlib.sha256(pw.encode()).digest())
+        pw_res = s.recv(1024).decode()
+        if pw_res.startswith("welcome"):
+            authenticated = True
+        print(pw_res)
+    except:
+        print("authentication failed")
+        break
+
+while authenticated:
     try: 
         #MSG| needed for messaging
         input_str = ("MSG|" + input()).encode()
