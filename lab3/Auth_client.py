@@ -40,13 +40,13 @@ print('type something contaning the word "exit" to break conection')
 # HELLO| needed to decalre username
 s.send(("HELLO|" + x).encode())
 print (s.recv(1024).decode())
-
+opt_authenticated = False
 authenticated = password_auth()
+if authenticated:
+    opt_authenticated = OTP_auth()
 
-opt_authenticated = OTP_auth()
 
-
-while authenticated:
+while opt_authenticated:
     try: 
         #MSG| needed for messaging
         input_str = ("MSG|" + input()).encode()
