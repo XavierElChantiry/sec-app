@@ -1,15 +1,19 @@
 
 # i will be cleaning this up into functions if i need to build on this next week
 import socket
+import pyotp
 # import crypt
 # I have improted socket
 
-#this will be moved to a external file if we have to topuch this section again
+#this will be moved to a external file if we have to touch this section again
+# i know its not secure at all
+
 auth_dict = {
-  "mike": b'\x1a\xa4\xf3\xd6\xea[L\x93\x05\xa7\xef\xe7\xd0k1\xe9v1w\x11\x9a\xfb\x06\x04\xa27\xdd\x7f\xa3n}\x82', # Ford
-  "mini": b'\xca\x97\x81\x12\xca\x1b\xbd\xca\xfa\xc21\xb3\x9a#\xdcM\xa7\x86\xef\xf8\x14|Nr\xb9\x80w\x85\xaf\xeeH\xbb', # a
-  "xav": b'y\x02i\x9b\xe4,\x8a\x8eF\xfb\xbbE\x01re\x17\xe8k"\xc5j\x18\x9fv%\xa6\xdaI\x08\x1b$Q'
+
 }
+base32secret3232 = ''
+
+
 
 port = 12345
 s = socket.socket()
@@ -57,12 +61,12 @@ def chat_function():
             c.close()
             break
 
-def authentication(counter):
+def pw_authentication(counter):
     try:
         while counter > 0 :
             pw = c.recv(1042)
             if pw == auth_dict[username]:
-                c.send(("welcome " + username).encode())
+                c.send(("OTP code please " + username).encode())
                 print("user authenticated")
                 return True
             else:
@@ -73,6 +77,27 @@ def authentication(counter):
     except Exception as error:
         print(error)
         print("username does not exist")
+        return False
+
+
+def OTP_auth():
+    opt_counter = 4
+    try:
+        while opt_counter > 0:
+            totp = pyotp.TOTP('base32secret3232')
+            totp.now()
+            OTP = c.recv(1042).decode()
+            if totp.verify(OTP):
+                c.send(("OTP code accepted " + username).encode())
+                print("user authenticated")
+                return True
+            else:
+                print("user not authenticated")
+                c.send(("OTP incorrect").encode())
+                opt_counter -= 1
+    except Exception as error:
+        print(error)
+        print("something odd has occured")
         return False
 
 
@@ -98,11 +123,10 @@ while True:
 
 
         # start taking messages from client
-        if authentication(counter):
+        if pw_authentication(counter) and OTP_auth():
             chat_function()
         else:
-            print("triggeted")
-            c.send("ERROR|all guesses expended".encode())
+            c.send("ERROR|something broke".encode())
         c.close()
 
  # if client does not say hello they get disconnected

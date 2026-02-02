@@ -3,10 +3,36 @@ import hashlib
 import pyotp
 
 s = socket.socket()
-
 port = 12345
 #this initates the connection
 s.connect(('127.0.0.1', port)) 
+
+def password_auth():
+    while True:
+        try:
+            pw = input("password: ")
+            s.send(hashlib.sha256(pw.encode()).digest())
+            pw_res = s.recv(1024).decode()
+            if pw_res.startswith("OTP"):
+                return True
+            print(pw_res)
+        except:
+            print("authentication failed")
+            return False
+
+def OTP_auth():
+    while True:
+        try:
+            pw = input("OTP code: ")
+            s.send(pw.encode())
+            pw_res = s.recv(1024).decode()
+            if pw_res.startswith("OTP code accepted"):
+                print(pw_res)
+                return True
+            print(pw_res)
+        except:
+            print("authentication failed")
+            return False
 
 #this is sssssssssssssssssuper basic at the moment
 x = input('Enter your name:  ')
@@ -15,19 +41,10 @@ print('type something contaning the word "exit" to break conection')
 s.send(("HELLO|" + x).encode())
 print (s.recv(1024).decode())
 
-authenticated = False
+authenticated = password_auth()
 
-while not authenticated:
-    try:
-        pw = input("password: ")
-        s.send(hashlib.sha256(pw.encode()).digest())
-        pw_res = s.recv(1024).decode()
-        if pw_res.startswith("welcome"):
-            authenticated = True
-        print(pw_res)
-    except:
-        print("authentication failed")
-        break
+opt_authenticated = OTP_auth()
+
 
 while authenticated:
     try: 
