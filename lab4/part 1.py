@@ -1,8 +1,8 @@
 from scapy.all import sniff
 
 def packet_callback(packet):
-    # print(packet.json())  #un comment this one if you want to test the http only one. 
-    print(packet.summary())
+    print(packet.json())  #un comment this one if you want to test the http only one. 
+    # print(packet.summary())
 
 # a. TCP only
 # print("50 TCP packets...")

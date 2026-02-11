@@ -11,6 +11,6 @@ def detect_sensitive_data(packet):
             if keyword in payload.lower():
                 print(f"\nkeyword matched somthing may be here")
                 print(f"Keyword match: {keyword}")
-                print(f"Payload Fragment: {payload[:100]}") # chunk of payload
+                print(f"Payload Fragment: {payload[:124]}") # chunk of payload feel free to change size 100 was used in screenshot
 
 sniff(filter="tcp port 80", count=50, prn=detect_sensitive_data)
