@@ -3,3 +3,5 @@
 *.zip
 # .gitignore
 lab3/Auth_*.py
+lab3/Auth_client.py
+lab3/Auth_server.py
