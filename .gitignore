@@ -1,0 +1,5 @@
+*.docx
+*.pdf
+*.zip
+# .gitignore
+lab3/Auth_*.py
