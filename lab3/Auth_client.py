@@ -1,6 +1,5 @@
 import socket
 import hashlib
-import pyotp
 
 s = socket.socket()
 port = 12345
