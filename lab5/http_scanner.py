@@ -16,6 +16,7 @@ injection = [
     ("normal", "apple"),
     ("normal", "a"),
     ("xss", "<script>alert(1)</script>"),
+    ("xss", "') OR 1=1--"),
     ("xss", "<u>test</u>"),
     ("sqli", "' OR 1=1 --"),
     ("sqli", "'")
