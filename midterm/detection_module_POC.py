@@ -55,21 +55,20 @@ def packet_analyzer(pkt):
     
     ip_timestamps[src_ip] = culled_timestamps
 
-    # clear alerted ips so if this runs forever it does not cause memory leak
+    # clear alerted ips so if this runs forever it does not eat all the RAM
     if len(alerted_ips) > 100:
         alerted_ips.clear()
 
     """
     as we know syn floods are something we should be extra careful of,
     so we check if the packet that exceeded the threshold was a syn packet, if it was we get an alert
-    This is not a perfect method. but it is a proof of concept
+    This is not a perfect method, but it is atleast some indication.
     """
     is_syn = False 
-
     if TCP in pkt and pkt[TCP].flags == "S":
         is_syn = True
 
-    # threshold Check
+    # threshold check to see if there are more packets than permited in sliding window
     if len(ip_timestamps[src_ip]) > threshold:
         if src_ip not in alerted_ips:
             if is_syn:
@@ -89,7 +88,6 @@ def main():
     """
     store=0 makes it so that packets are not stored to memory.
     This way it wont eat all the ram on a machine if left running.
-    IT still may eat alot as ip_timestamps = {} and alerted_ips = [] grow
     """
     sniff(filter="ip or ip6", prn=packet_analyzer, store=0)
 
