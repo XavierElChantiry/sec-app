@@ -4,7 +4,10 @@ from scapy.all import sniff, IP, IPv6, TCP, UDP
 threshold = 50
 sliding_window = 5.0
 
-
+"""
+I do not have outputing of pcap files as I do not belive it is core logic in the detection process.
+It is more or less logging after the fact.
+"""
 ip_timestamps = {}
 alerted_ips = []
 
