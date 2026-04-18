@@ -1,0 +1,26 @@
+{
+  "admin": {
+    "salt": "14ebfe01128eecf4",
+    "hash": "8994fd39aacf53f24fc52f7c12120fbde1706268aa91f9e1310b8f81e52ea818",
+    "totp_secret": "JBSWY3DPEHPK3PXP",
+    "fernet_key":"hvB8yRzpkib6A_bigVQunDzpoC2dialsE24spg0b8C8="
+  },
+  "mike": {
+    "salt": "25e58dfdcc7c04d0",
+    "hash": "72f8e99ca5f17b04a691f6f4c2b70cc9f98cc109ddb53d215865467a689ae5bc",
+    "totp_secret": "K4SXL3DPNHPK3PXQ",
+    "fernet_key":"PKv9S2v71ouGzFBTCz5ws_GCFiAMmJjmdHQTgi1Y1Og="
+  },
+  "agent": {
+    "salt": "d3a2eb73290301b2",
+    "hash": "46a99633340f09fc8b3f8122da9a9b930a38b09598679f565ead9650f62cd6ac",
+    "totp_secret": "M6TYR3DPEHPK3PXR",
+    "fernet_key":"umFEoGx1dh_uONtSHW8iBsrGYunnhJpZA5SyZJNuVf4="
+  },
+  "guest": {
+    "salt": "8e700444682bcb46",
+    "hash": "24230be6d404d553805583a0dea75a1d4f6cc019589f403f4ff8b22db626f75a",
+    "totp_secret": "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP",
+    "fernet_key":"CoDky-HQWf_VrPCqid97nmTt_ZEqiP_Yf_74JQty-zg="
+  }
+}
