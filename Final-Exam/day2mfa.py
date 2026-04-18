@@ -29,12 +29,12 @@ def authenticate(username, input_password, input_token):
     
     input_hash = hashlib.sha256(salt + input_password.encode()).hexdigest()
     pw_success = (input_hash == expected_hash)
-    print(pw_success)
+    # print(pw_success)
 
     totp = pyotp.TOTP(user_data['totp_secret'])
     totp.now() 
-    print(totp.now())
-    print(input_token)
+    # print(totp.now())
+    # print(input_token)
     otp_success = totp.verify(input_token)
 
     # Final Policy Check

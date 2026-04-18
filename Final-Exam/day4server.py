@@ -17,7 +17,6 @@ def server():
             print(f"connected to {addr}") 
 
             try: 
-                print("here")
                 auth_data = conn.recv(1024).decode().split(',')
                 
                 if len(auth_data) < 3:

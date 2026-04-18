@@ -17,8 +17,8 @@ def authenticator_code(username):
 
     totp = pyotp.TOTP(user_data['totp_secret'])
     # print(user_data['totp_secret'])
+    print(totp.now())
     return totp.now() 
-    # print(totp.now())
 
 if __name__ == "__main__":
-    authenticator_code("guest")
+    authenticator_code("admin")

@@ -1,9 +1,8 @@
 
 
-base32secret3232 = '7VW5NA46WWYKTWV2GQSH6NZJIZYHYS3T'
+base32secret3232 = 'JBSWY3DPEHPK3PXP'
 
 import pyotp
-import time
 
 totp = pyotp.TOTP('base32secret3232')
 totp.now() 

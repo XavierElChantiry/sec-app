@@ -10,6 +10,7 @@ def extract_hidden(file_name):
         image = Image.open(file_name)
         data = stepic.decode(image) 
         log_file.write(data)
+        # print(data)
         return data
 
 
